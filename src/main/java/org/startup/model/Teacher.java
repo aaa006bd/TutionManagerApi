@@ -22,22 +22,13 @@ import java.util.Set;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter@Setter
     private long id;
 
-    @Getter@Setter
+    @Getter
+    @Setter
     @NotBlank(message = ErrorMessage.NAME_BLANK)
     private String name;
-
-    @Getter@Setter
-    @NotBlank(message = ErrorMessage.UNI_BLANK)
-    private String university;
-
-    @Getter@Setter
-    @NotBlank(message = ErrorMessage.DEPT_BLANK)
-    private String department;
-
-    @Getter@Setter
-    private String gender;
 
     @Getter@Setter
     @NotBlank(message = ErrorMessage.MOBILE_BLANK)
@@ -48,6 +39,18 @@ public class Teacher {
     @NotBlank(message = ErrorMessage.EMAIL_BLANK)
     @Column(unique = true)
     private String email;
+
+    @Getter@Setter
+    private String gender;
+
+    @Getter@Setter
+    @NotBlank(message = ErrorMessage.UNI_BLANK)
+    private String university;
+
+    @Getter@Setter
+    @NotBlank(message = ErrorMessage.DEPT_BLANK)
+    private String department;
+
 
     @Getter@Setter
     @Column(name = "preferred_location")
@@ -64,13 +67,12 @@ public class Teacher {
     @JsonProperty("expected_salary_max")
     private short expectedSalaryMax;
 
-    @Lob
+    @OneToOne
+    @JoinColumn(name = "fileData_id")
     @Getter@Setter
-    private byte[] pdf;
+    private FileData fileData;
 
-    @Lob
-    @Getter@Setter
-    private byte[] image;
+
 
 
 }
