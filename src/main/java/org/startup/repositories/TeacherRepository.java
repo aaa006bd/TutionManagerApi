@@ -20,23 +20,25 @@ import java.util.List;
 public interface TeacherRepository extends PagingAndSortingRepository<Teacher, Long> {
 
     @RestResource(path = "maxsalarybewteen")
-    public List<Teacher> getAllByExpectedSalaryMaxBetween(@Param("start") short start,
-                                                          @Param("end") short end,
-                                                          Pageable page);
+    public List<Teacher> getAllByApprovedByAdminAndExpectedSalaryMaxBetween(@Param("approved")boolean approved,
+                                                                            @Param("start") short start,
+                                                                            @Param("end") short end,
+                                                                            Pageable page);
 
     @RestResource(path = "minsalarybewteen")
-    public List<Teacher> getAllByExpectedSalaryMinBetween(@Param("start") short start,
-                                                          @Param("end")short end,
-                                                          @PathParam("page")Pageable page);
+    public List<Teacher> getAllByApprovedByAdminAndExpectedSalaryMinBetween(@Param("approved") boolean approved,
+                                                                            @Param("start") short start,
+                                                                            @Param("end")short end,
+                                                                            @PathParam("page")Pageable page);
 
     @RestResource(path = "gender")
-    public List<Teacher> getAllByGender(@Param("gender")String gender, Pageable page);
+    public List<Teacher> getAllByGenderAndApprovedByAdmin(@Param("gender")String gender,@Param("approved")boolean approved, Pageable page);
 
     public Teacher findByEmail(String email);
 
     @RestResource(path = "deptandgender")
-    public List<Teacher> getAllByGenderAndDepartment(@Param("gender")String  gender,
-                                                     @Param("dept") String dept,
+    public List<Teacher> getAllByGenderAndDepartmentAndApprovedByAdmin(@Param("gender")String  gender,
+                                                     @Param("dept") String dept,@Param("approved")boolean approved,
                                                      Pageable page);
 
     @RestResource(path = "all")
@@ -44,17 +46,17 @@ public interface TeacherRepository extends PagingAndSortingRepository<Teacher, L
     public List<Teacher> findAllTeacher(Pageable page);
 
     @RestResource(path = "dept")
-    public List<Teacher>findAllByDepartment(@Param("dept")String dept,Pageable page);
+    public List<Teacher>findAllByDepartmentAndApprovedByAdmin(@Param("dept")String dept,@Param("approved")boolean approved, Pageable page);
 
     @RestResource(path = "deptanduni")
-    public List<Teacher>findAllByDepartmentAndUniversity(@Param("dept") String dept,
-                                                         @Param("uni") String uni,
+    public List<Teacher>findAllByDepartmentAndUniversityAndApprovedByAdmin(@Param("dept") String dept,
+                                                         @Param("uni") String uni,@Param("approved")boolean approved,
                                                          Pageable page);
 
     @RestResource(path = "uni")
-    public List<Teacher>findAllByUniversity(@Param("uni")String uni,Pageable page);
+    public List<Teacher>findAllByUniversityAndApprovedByAdmin(@Param("uni")String uni,@Param("approved")boolean approved, Pageable page);
 
-    @Query("select DISTINCT t.university from Teacher t")
+    @Query("select DISTINCT t.university from Teacher t ")
     public List<String >findUniList();
 
     @Query("select DISTINCT t.department from Teacher t")
